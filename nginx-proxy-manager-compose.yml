@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  nginx-proxy-manager:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - '80:80'     # HTTP
+      - '443:443'   # HTTPS
+      - '81:81'     # Admin Web Interface
+    volumes:
+      - nginx-proxy-manager-data:/data
+      - nginx-proxy-manager-ssl:/etc/letsencrypt
+    environment:
+      - DB_SQLITE_FILE=/data/database.sqlite
+    healthcheck:
+      test: ["CMD", "/bin/check-health"]
+      interval: 10s
+      timeout: 3s
+
+volumes:
+  nginx-proxy-manager-data:
+  nginx-proxy-manager-ssl:
+
+networks:
+  default:
+    name: nginx-proxy-manager
+    external: false
