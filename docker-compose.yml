@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  risk-agents-landing:
+    build: .
+    container_name: risk-agents-landing
+    ports:
+      - "127.0.0.1:8080:8080"  # Only bind to localhost since Nginx will proxy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - risk-agents-net
+
+networks:
+  risk-agents-net:
+    driver: bridge

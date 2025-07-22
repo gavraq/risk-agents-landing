@@ -1,0 +1,28 @@
+# Git files
+.git
+.gitignore
+
+# Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.env
+
+# Development files
+.vscode/
+.idea/
+*.log
+
+# Documentation
+README.md
+*.md
+
+# Old server file
+python_web_server.py
+
+# Docker files (not needed in container)
+Dockerfile
+docker-compose.yml
+.dockerignore
